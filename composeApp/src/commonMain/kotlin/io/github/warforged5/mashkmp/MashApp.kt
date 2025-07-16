@@ -1,4 +1,5 @@
 package io.github.warforged5.mash
+
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.*
@@ -12,7 +13,14 @@ import androidx.compose.ui.*
 import androidx.compose.ui.draw.*
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.unit.*
-import androidx.navigation.compose.*
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 import io.github.warforged5.mashkmp.screens.CreateTemplateScreen
 import io.github.warforged5.mash.screens.HistoryScreen
 import io.github.warforged5.mash.screens.HomeScreen
@@ -51,18 +59,43 @@ fun MashApp(themeManager: ThemeManager) {
                     scaleOut(targetScale = 0.9f, animationSpec = tween(200))
         }
     ) {
-        composable("home") { HomeScreen(navController, themeManager) }
-        composable("new_mash") { NewMashScreen(navController, viewModel) }
-        composable("create_template") { CreateTemplateScreen(navController, viewModel) }
-        composable("history") { HistoryScreen(navController, viewModel) }
-        composable("mash_setup/{type}") { backStackEntry ->
-            val type = MashType.valueOf(backStackEntry.arguments?.getString("type") ?: "CLASSIC")
+        composable("home") {
+            HomeScreen(navController, themeManager)
+        }
+
+        composable("new_mash") {
+            NewMashScreen(navController, viewModel)
+        }
+
+        composable("create_template") {
+            CreateTemplateScreen(navController, viewModel)
+        }
+
+        composable("history") {
+            HistoryScreen(navController, viewModel)
+        }
+
+        composable(
+            "mash_setup/{type}",
+            arguments = listOf(navArgument("type") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val typeString = backStackEntry.arguments?.getString("type") ?: "CLASSIC"
+            val type = try {
+                MashType.valueOf(typeString)
+            } catch (e: IllegalArgumentException) {
+                MashType.CLASSIC
+            }
             MashSetupScreen(navController, viewModel, type)
         }
-        composable("mash_input/{templateId}") { backStackEntry ->
+
+        composable(
+            "mash_input/{templateId}",
+            arguments = listOf(navArgument("templateId") { type = NavType.StringType })
+        ) { backStackEntry ->
             val templateId = backStackEntry.arguments?.getString("templateId") ?: ""
             MashInputScreen(navController, viewModel, templateId)
         }
+
         composable("mash_result") {
             MashResultScreen(navController, viewModel)
         }

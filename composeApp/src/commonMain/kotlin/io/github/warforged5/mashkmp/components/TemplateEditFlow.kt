@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.*
 import androidx.compose.ui.window.Dialog
 import io.github.warforged5.mashkmp.dataclasses.CategoryData
 import io.github.warforged5.mashkmp.dataclasses.MashTemplate
-import io.github.warforged5.mash.enumclasses.MashType
+import io.github.warforged5.mashkmp.enumclasses.MashType
 import kotlinx.coroutines.delay
 import kotlin.math.pow
 

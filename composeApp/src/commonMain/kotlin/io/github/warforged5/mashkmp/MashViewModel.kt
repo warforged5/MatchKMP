@@ -3,21 +3,23 @@ package io.github.warforged5.mash
 import androidx.compose.runtime.*
 import io.github.warforged5.mashkmp.dataclasses.MashResult
 import io.github.warforged5.mashkmp.dataclasses.MashTemplate
-import android.content.Context
-import android.content.SharedPreferences
-import com.google.ai.client.generativeai.type.content
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import io.github.warforged5.mashkmp.platform.Settings
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.builtins.ListSerializer
 import dev.shreyaspatil.ai.client.generativeai.GenerativeModel
 import dev.shreyaspatil.ai.client.generativeai.type.content
 import io.github.warforged5.mash.BuildConfig.GEMINI_API_KEY
 import io.github.warforged5.mashkmp.dataclasses.CategoryData
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
 
-class MashViewModel(private val context: Context) : androidx.lifecycle.ViewModel() {
-    private val prefs: SharedPreferences = context.getSharedPreferences("mash_prefs", Context.MODE_PRIVATE)
-    private val gson = Gson()
+class MashViewModel(private val settings: Settings) : androidx.lifecycle.ViewModel() {
+    private val json = Json {
+        ignoreUnknownKeys = true
+        encodeDefaults = true
+    }
 
     var tempTemplate: MashTemplate? = null
 
@@ -163,45 +165,58 @@ class MashViewModel(private val context: Context) : androidx.lifecycle.ViewModel
     }
 
     private fun saveTemplates() {
-        val json = gson.toJson(templates)
-        prefs.edit().putString("templates", json).apply()
+        try {
+            val jsonString = json.encodeToString(ListSerializer(MashTemplate.serializer()), templates.toList())
+            settings.putString("templates", jsonString)
+        } catch (e: Exception) {
+            // Handle serialization error
+            println("Error saving templates: ${e.message}")
+        }
     }
 
     private fun loadTemplates() {
-        val json = prefs.getString("templates", null) ?: return
         try {
-            val type = object : TypeToken<List<MashTemplate>>() {}.type
-            val loaded = gson.fromJson<List<MashTemplate>>(json, type)
+            val jsonString = settings.getString("templates", null)
+            if (jsonString != null) {
+                val loaded = json.decodeFromString(ListSerializer(MashTemplate.serializer()), jsonString)
 
-            // Only load templates that have the new CategoryData structure
-            val validTemplates = loaded.filter { template ->
-                template.categories.isNotEmpty() &&
-                        template.categories.all { it.realName.isNotEmpty() }
+                // Only load templates that have the new CategoryData structure
+                val validTemplates = loaded.filter { template ->
+                    template.categories.isNotEmpty() &&
+                            template.categories.all { it.realName.isNotEmpty() }
+                }
+
+                templates.clear()
+                templates.addAll(validTemplates)
             }
-
-            templates.clear()
-            templates.addAll(validTemplates)
         } catch (e: Exception) {
             // If there's any parsing error, just clear the templates
             templates.clear()
+            println("Error loading templates: ${e.message}")
         }
     }
 
     private fun saveHistory() {
-        val json = gson.toJson(history.take(50))
-        prefs.edit().putString("history", json).apply()
+        try {
+            val jsonString = json.encodeToString(ListSerializer(MashResult.serializer()), history.take(50))
+            settings.putString("history", jsonString)
+        } catch (e: Exception) {
+            println("Error saving history: ${e.message}")
+        }
     }
 
     private fun loadHistory() {
-        val json = prefs.getString("history", null) ?: return
         try {
-            val type = object : TypeToken<List<MashResult>>() {}.type
-            val loaded = gson.fromJson<List<MashResult>>(json, type)
-            history.clear()
-            history.addAll(loaded)
+            val jsonString = settings.getString("history", null)
+            if (jsonString != null) {
+                val loaded = json.decodeFromString(ListSerializer(MashResult.serializer()), jsonString)
+                history.clear()
+                history.addAll(loaded)
+            }
         } catch (e: Exception) {
             // If there's any parsing error, just clear the history
             history.clear()
+            println("Error loading history: ${e.message}")
         }
     }
 }

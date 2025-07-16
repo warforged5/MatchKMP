@@ -20,8 +20,8 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.*
-import io.github.warforged5.mash.dataclasses.EliminationChoice
-import io.github.warforged5.mash.dataclasses.EliminationState
+import io.github.warforged5.mashkmp.dataclasses.EliminationChoice
+import io.github.warforged5.mashkmp.dataclasses.EliminationState
 import io.github.warforged5.mashkmp.dataclasses.CategoryData
 import kotlinx.coroutines.delay
 

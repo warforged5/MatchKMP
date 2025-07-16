@@ -1,3 +1,4 @@
+
 package io.github.warforged5.mashkmp.components
 
 import androidx.compose.animation.AnimatedContent
@@ -24,25 +25,19 @@ import androidx.compose.animation.shrinkVertically
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.material.icons.rounded.AutoAwesome
-import androidx.compose.material.icons.rounded.AutoStories
-import androidx.compose.material.icons.rounded.Build
-import androidx.compose.material.icons.rounded.Delete
-import androidx.compose.material.icons.rounded.ExpandLess
-import androidx.compose.material.icons.rounded.ExpandMore
-import androidx.compose.material.icons.rounded.Home
-import androidx.compose.material.icons.rounded.Refresh
-import androidx.compose.material.icons.rounded.Shuffle
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.autofill.ContentDataType.Companion.Date
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.style.TextOverflow
-import io.github.warforged5.mash.dataclasses.MashResult
-import io.github.warforged5.mash.enumclasses.MashType
+import io.github.warforged5.mashkmp.dataclasses.MashResult
+import io.github.warforged5.mashkmp.enumclasses.MashType
+import kotlinx.datetime.Instant
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
+import kotlin.time.ExperimentalTime
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalTime::class)
 @Composable
 fun ModernHistoryCard(
     result: MashResult,
@@ -62,9 +57,11 @@ fun ModernHistoryCard(
         )
     )
 
-    val dateFormatter = remember { SimpleDateFormat("MMM d, yyyy", Locale.current) }
-    val timeFormatter = remember { SimpleDateFormat("h:mm a", Locale.getDefault()) }
-    val date = Date(result.timestamp)
+    val instant = Instant.fromEpochMilliseconds(result.timestamp)
+    val localDateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
+
+    val dateString = "${localDateTime.month.name.lowercase().replaceFirstChar { it.uppercase() }} ${localDateTime.dayOfMonth}, ${localDateTime.year}"
+    val timeString = "${if (localDateTime.hour == 0) 12 else if (localDateTime.hour > 12) localDateTime.hour - 12 else localDateTime.hour}:${localDateTime.minute.toString().padStart(2, '0')} ${if (localDateTime.hour < 12) "AM" else "PM"}"
 
     ElevatedCard(
         onClick = { expanded = !expanded },
@@ -174,7 +171,7 @@ fun ModernHistoryCard(
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     Text(
-                                        dateFormatter.format(date),
+                                        dateString,
                                         style = MaterialTheme.typography.bodySmall,
                                         color = MaterialTheme.colorScheme.onSurfaceVariant
                                     )
@@ -185,7 +182,7 @@ fun ModernHistoryCard(
                                     )
 
                                     Text(
-                                        timeFormatter.format(date),
+                                        timeString,
                                         style = MaterialTheme.typography.bodySmall,
                                         color = MaterialTheme.colorScheme.onSurfaceVariant
                                     )
@@ -358,8 +355,6 @@ fun ModernHistoryCard(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
-
-
                             Button(
                                 onClick = { /* Play again with same template */ },
                                 modifier = Modifier.weight(1f)

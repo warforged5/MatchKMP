@@ -18,7 +18,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.*
 import io.github.warforged5.mashkmp.dataclasses.MashTemplate
-import io.github.warforged5.mash.enumclasses.MashType
+import io.github.warforged5.mashkmp.enumclasses.MashType
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -21,8 +21,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.*
 import androidx.navigation.NavController
 import io.github.warforged5.mash.MashViewModel
-import io.github.warforged5.mash.components.*
-import io.github.warforged5.mashkmp.dataclasses.MashTemplate
+import io.github.warforged5.mashkmp.components.*
+import io.github.warforged5.mashkmp.dataclasses.*
+import io.github.warforged5.mashkmp.enumclasses.*
 import io.github.warforged5.mashkmp.components.SimplifiedTemplateCreationFlow
 import io.github.warforged5.mashkmp.components.TemplateEditFlow
 import io.github.warforged5.mashkmp.dataclasses.CategoryData
@@ -279,23 +280,23 @@ private fun EnhancedSavedTemplateCard(
                     modifier = Modifier.size(56.dp),
                     shape = RoundedCornerShape(16.dp),
                     color = when (template.type) {
-                        io.github.warforged5.mash.enumclasses.MashType.CLASSIC -> MaterialTheme.colorScheme.primaryContainer
-                        io.github.warforged5.mash.enumclasses.MashType.HYBRID -> MaterialTheme.colorScheme.secondaryContainer
-                        io.github.warforged5.mash.enumclasses.MashType.CUSTOM -> MaterialTheme.colorScheme.tertiaryContainer
+                        MashType.CLASSIC -> MaterialTheme.colorScheme.primaryContainer
+                        MashType.HYBRID -> MaterialTheme.colorScheme.secondaryContainer
+                        MashType.CUSTOM -> MaterialTheme.colorScheme.tertiaryContainer
                     }
                 ) {
                     Box(contentAlignment = Alignment.Center) {
                         Icon(
                             when (template.type) {
-                                io.github.warforged5.mash.enumclasses.MashType.CLASSIC -> Icons.Rounded.Home
-                                io.github.warforged5.mash.enumclasses.MashType.HYBRID -> Icons.Rounded.Shuffle
-                                io.github.warforged5.mash.enumclasses.MashType.CUSTOM -> Icons.Rounded.Build
+                                MashType.CLASSIC -> Icons.Rounded.Home
+                                MashType.HYBRID -> Icons.Rounded.Shuffle
+                                MashType.CUSTOM -> Icons.Rounded.Build
                             },
                             contentDescription = null,
                             tint = when (template.type) {
-                                io.github.warforged5.mash.enumclasses.MashType.CLASSIC -> MaterialTheme.colorScheme.onPrimaryContainer
-                                io.github.warforged5.mash.enumclasses.MashType.HYBRID -> MaterialTheme.colorScheme.onSecondaryContainer
-                                io.github.warforged5.mash.enumclasses.MashType.CUSTOM -> MaterialTheme.colorScheme.onTertiaryContainer
+                                MashType.CLASSIC -> MaterialTheme.colorScheme.onPrimaryContainer
+                                MashType.HYBRID -> MaterialTheme.colorScheme.onSecondaryContainer
+                                MashType.CUSTOM -> MaterialTheme.colorScheme.onTertiaryContainer
                             },
                             modifier = Modifier.size(28.dp)
                         )

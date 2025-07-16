@@ -30,8 +30,8 @@ import io.github.warforged5.mashkmp.components.ChoiceInputSection
 import io.github.warforged5.mashkmp.components.NewEliminationSystem
 import io.github.warforged5.mashkmp.components.NewSpiralDrawingDialog
 import io.github.warforged5.mashkmp.components.OutputTypeDialog
-import io.github.warforged5.mash.dataclasses.MashResult
-import io.github.warforged5.mash.enumclasses.OutputType
+import io.github.warforged5.mashkmp.dataclasses.MashResult
+import io.github.warforged5.mashkmp.enumclasses.OutputType
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)

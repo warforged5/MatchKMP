@@ -1,12 +1,11 @@
 package io.github.warforged5.mash.ui.theme
 
-import android.content.Context
-import android.content.SharedPreferences
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import io.github.warforged5.mashkmp.platform.Settings
 
 enum class DarkModePreference {
     SYSTEM,
@@ -14,9 +13,7 @@ enum class DarkModePreference {
     DARK
 }
 
-class ThemeManager(context: Context) {
-    private val prefs: SharedPreferences = context.getSharedPreferences("theme_prefs", Context.MODE_PRIVATE)
-
+class ThemeManager(private val settings: Settings) {
     var currentTheme by mutableStateOf(loadTheme())
         private set
 
@@ -43,7 +40,7 @@ class ThemeManager(context: Context) {
     }
 
     private fun loadTheme(): AppTheme {
-        val themeName = prefs.getString("selected_theme", AppTheme.MYSTICAL.name) ?: AppTheme.MYSTICAL.name
+        val themeName = settings.getString("selected_theme", AppTheme.MYSTICAL.name) ?: AppTheme.MYSTICAL.name
         return try {
             AppTheme.valueOf(themeName)
         } catch (e: IllegalArgumentException) {
@@ -52,11 +49,11 @@ class ThemeManager(context: Context) {
     }
 
     private fun saveTheme(theme: AppTheme) {
-        prefs.edit().putString("selected_theme", theme.name).apply()
+        settings.putString("selected_theme", theme.name)
     }
 
     private fun loadDarkModePreference(): DarkModePreference {
-        val prefName = prefs.getString("dark_mode_preference", DarkModePreference.SYSTEM.name)
+        val prefName = settings.getString("dark_mode_preference", DarkModePreference.SYSTEM.name)
             ?: DarkModePreference.SYSTEM.name
         return try {
             DarkModePreference.valueOf(prefName)
@@ -66,7 +63,7 @@ class ThemeManager(context: Context) {
     }
 
     private fun saveDarkModePreference(preference: DarkModePreference) {
-        prefs.edit().putString("dark_mode_preference", preference.name).apply()
+        settings.putString("dark_mode_preference", preference.name)
     }
 }
 

@@ -33,8 +33,11 @@ import io.github.warforged5.mashkmp.components.InfoCard
 import io.github.warforged5.mashkmp.dataclasses.CategoryData
 import io.github.warforged5.mashkmp.dataclasses.MashTemplate
 import io.github.warforged5.mashkmp.enumclasses.MashType
+import kotlinx.datetime.asTimeSource
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalTime::class)
 @Composable
 fun MashSetupScreen(
     navController: NavController,
@@ -96,7 +99,7 @@ fun MashSetupScreen(
                     onClick = {
                         haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                         val template = MashTemplate(
-                            id = "temp_${System.currentTimeMillis()}",
+                            id = "temp_${Clock.System.now().toEpochMilliseconds()}",
                             name = "$type Game",
                             categories = selectedCategories.toList(),
                             type = type

@@ -19,7 +19,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.*
-import io.github.warforged5.mash.enumclasses.MashType
+import io.github.warforged5.mashkmp.enumclasses.MashType
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)

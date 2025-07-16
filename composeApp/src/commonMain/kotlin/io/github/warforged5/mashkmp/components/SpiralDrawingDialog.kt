@@ -52,7 +52,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.*
 import androidx.compose.ui.window.Dialog
-import io.github.warforged5.mash.enumclasses.SpiralPhase
+import io.github.warforged5.mashkmp.enumclasses.SpiralPhase
 import kotlinx.coroutines.delay
 import kotlin.math.*
 import kotlin.time.Clock

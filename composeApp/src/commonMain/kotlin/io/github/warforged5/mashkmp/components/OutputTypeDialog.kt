@@ -18,7 +18,7 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.*
 import androidx.compose.ui.window.Dialog
-import io.github.warforged5.mash.enumclasses.OutputType
+import io.github.warforged5.mashkmp.enumclasses.OutputType
 import io.github.warforged5.mashkmp.components.OutputOptionCard
 
 @Composable

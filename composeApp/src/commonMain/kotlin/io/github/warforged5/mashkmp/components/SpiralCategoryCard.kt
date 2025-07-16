@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.*
-import io.github.warforged5.mash.dataclasses.EliminationState
+import io.github.warforged5.mashkmp.dataclasses.EliminationState
 import io.github.warforged5.mashkmp.dataclasses.CategoryData
 
 @Composable
