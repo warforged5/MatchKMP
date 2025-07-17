@@ -67,13 +67,9 @@ fun HistoryScreen(navController: NavController, viewModel: MashViewModel) {
                         Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = "Back")
                     }
                 },
-                actions = {
-                    IconButton(onClick = { /* Add sort options */ }) {
-                        Icon(Icons.AutoMirrored.Rounded.Sort, contentDescription = "Sort")
-                    }
-                }
             )
-        }
+        },
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
     ) { paddingValues ->
         Box(
 

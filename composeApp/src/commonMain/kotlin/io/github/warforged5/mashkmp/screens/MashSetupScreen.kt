@@ -83,6 +83,7 @@ fun MashSetupScreen(
                 )
             )
         },
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
         floatingActionButton = {
             AnimatedVisibility(
                 visible = selectedCategories.isNotEmpty(),

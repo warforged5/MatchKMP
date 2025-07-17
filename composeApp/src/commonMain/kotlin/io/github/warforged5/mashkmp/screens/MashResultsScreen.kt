@@ -30,6 +30,7 @@ import io.github.warforged5.mashkmp.dataclasses.CategoryData
 import kotlinx.coroutines.delay
 import kotlin.math.*
 import kotlin.random.Random
+import androidx.compose.foundation.layout.WindowInsets
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -115,13 +116,10 @@ fun MashResultScreen(
                         Icon(Icons.Rounded.Home, contentDescription = "Home")
                     }
                 },
-                actions = {
-                    IconButton(onClick = { /* Share functionality */ }) {
-                        Icon(Icons.Rounded.Share, contentDescription = "Share")
-                    }
-                }
+
             )
-        }
+        },
+     contentWindowInsets = WindowInsets(0, 0, 0, 0),
     ) { paddingValues ->
         Box(
             modifier = Modifier

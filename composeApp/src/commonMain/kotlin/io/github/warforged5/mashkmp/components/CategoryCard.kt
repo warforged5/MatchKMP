@@ -79,17 +79,8 @@ fun CategoryCard(
                 ) {
                     Box(contentAlignment = Alignment.Center) {
                         Text(
-                            when (categoryData.nickname) {
-                                "MASH" -> "🏠"
-                                "People" -> "💖"
-                                "Number" -> "👶"
-                                "Vehicle" -> "🚗"
-                                "Places" -> "🌍"
-                                "Occupations" -> "💼"
-                                "Color" -> "🎨"
-                                "Flavor" -> "🍎"
-                                else -> "⭐"
-                            },
+                            categoryData.icon
+                            ,
                             style = MaterialTheme.typography.titleMedium
                         )
                     }

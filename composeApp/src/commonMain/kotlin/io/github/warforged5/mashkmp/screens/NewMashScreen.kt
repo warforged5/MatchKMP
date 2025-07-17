@@ -56,7 +56,8 @@ fun NewMashScreen(navController: NavController, viewModel: MashViewModel) {
                     containerColor = Color.Transparent
                 )
             )
-        }
+        },
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
     ) { paddingValues ->
         LazyColumn(
             modifier = Modifier

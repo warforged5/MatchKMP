@@ -31,6 +31,7 @@ import io.github.warforged5.mash.navigateToNewMash
 import io.github.warforged5.mashkmp.components.AnimatedHomeCard
 import io.github.warforged5.mashkmp.components.ThemeSelectionDialog
 import io.github.warforged5.mash.ui.theme.ThemeManager
+import androidx.compose.foundation.layout.WindowInsets
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -65,7 +66,8 @@ fun HomeScreen(
                 )
             )
         },
-        containerColor = MaterialTheme.colorScheme.background
+        containerColor = MaterialTheme.colorScheme.background,
+        contentWindowInsets = WindowInsets(0, 0, 0, 0)
     ) { paddingValues ->
         Column(
             modifier = Modifier

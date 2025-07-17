@@ -59,6 +59,7 @@ fun CreateTemplateScreen(navController: NavController, viewModel: MashViewModel)
                 }
             )
         },
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
         floatingActionButton = {
             ExtendedFloatingActionButton(
                 onClick = {
@@ -387,7 +388,7 @@ private fun EnhancedSavedTemplateCard(
                             ) {
                                 Icon(Icons.Rounded.Edit, contentDescription = null)
                                 Spacer(modifier = Modifier.width(4.dp))
-                                Text("Edit Template")
+                                Text("Edit")
                             }
 
                             Button(

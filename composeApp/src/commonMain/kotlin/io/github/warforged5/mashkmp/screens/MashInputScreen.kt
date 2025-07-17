@@ -89,6 +89,7 @@ fun MashInputScreen(
                 )
             )
         },
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
         bottomBar = {
             if (!showNewElimination) {
                 Surface(
