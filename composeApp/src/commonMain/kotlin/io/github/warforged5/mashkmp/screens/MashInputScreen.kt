@@ -1,4 +1,4 @@
-package io.github.warforged5.mash.screens
+package io.github.warforged5.mashkmp.screens
 
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
@@ -25,6 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.*
 import androidx.navigation.NavController
+import io.github.warforged5.mash.Home
 import io.github.warforged5.mash.MashViewModel
 import io.github.warforged5.mashkmp.components.ChoiceInputSection
 import io.github.warforged5.mashkmp.components.NewEliminationSystem
@@ -166,8 +167,8 @@ fun MashInputScreen(
                         spiralCount = spiralCount
                     )
                     viewModel.saveResult(result)
-                    navController.navigate("mash_result") {
-                        popUpTo("home")
+                    navController.navigate(MashResult) {
+                        popUpTo<Home>()
                     }
                 },
                 onGenerateStory = { results ->
@@ -188,8 +189,8 @@ fun MashInputScreen(
                         )
                         viewModel.saveResult(result)
                         isGeneratingStoryAfterSpiral = false
-                        navController.navigate("mash_result") {
-                            popUpTo("home")
+                        navController.navigate(MashResult) {
+                            popUpTo<Home>()
                         }
                     }
                 }
@@ -530,8 +531,8 @@ fun MashInputScreen(
                                 )
                                 viewModel.saveResult(result)
                                 isGeneratingStory = false
-                                navController.navigate("mash_result") {
-                                    popUpTo("home")
+                                navController.navigate(MashResult) {
+                                    popUpTo<Home>()
                                 }
                             }
                         }
@@ -552,8 +553,8 @@ fun MashInputScreen(
                                 selections = selections
                             )
                             viewModel.saveResult(result)
-                            navController.navigate("mash_result") {
-                                popUpTo("home")
+                            navController.navigate(MashResult) {
+                                popUpTo<Home>()
                             }
                         }
                     }

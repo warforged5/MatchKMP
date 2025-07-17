@@ -9,7 +9,6 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.builtins.ListSerializer
 import dev.shreyaspatil.ai.client.generativeai.GenerativeModel
 import dev.shreyaspatil.ai.client.generativeai.type.content
-import io.github.warforged5.mash.BuildConfig.GEMINI_API_KEY
 import io.github.warforged5.mashkmp.dataclasses.CategoryData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -24,7 +23,7 @@ class MashViewModel(private val settings: Settings) : androidx.lifecycle.ViewMod
     var tempTemplate: MashTemplate? = null
 
     // Gemini API
-    private val geminiApiKey = GEMINI_API_KEY
+    private val geminiApiKey = "AIzaSyCIigdTLam0KkaK1CRXNXLO_7kHlatnnpo"
     private val generativeModel = GenerativeModel(
         modelName = "gemini-2.5-flash",
         apiKey = geminiApiKey

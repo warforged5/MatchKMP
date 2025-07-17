@@ -474,12 +474,6 @@ private fun CosmicStartButton(
                         modifier = Modifier.size(40.dp),
                         tint = MaterialTheme.colorScheme.onPrimary
                     )
-                    Text(
-                        "START",
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.onPrimary
-                    )
                 }
             }
         }

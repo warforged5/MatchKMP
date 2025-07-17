@@ -1,4 +1,4 @@
-package io.github.warforged5.mash.screens
+package io.github.warforged5.mashkmp.screens
 
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
@@ -22,7 +22,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.*
 import androidx.navigation.NavController
+import io.github.warforged5.mash.Home
 import io.github.warforged5.mash.MashViewModel
+import io.github.warforged5.mash.navigateToHistory
+import io.github.warforged5.mash.navigateToNewMash
 import io.github.warforged5.mashkmp.dataclasses.CategoryData
 import kotlinx.coroutines.delay
 import kotlin.math.*
@@ -105,8 +108,8 @@ fun MashResultScreen(
                 },
                 navigationIcon = {
                     IconButton(onClick = {
-                        navController.navigate("home") {
-                            popUpTo("home") { inclusive = true }
+                        navController.navigate(Home) {
+                            popUpTo<Home> { inclusive = true }
                         }
                     }) {
                         Icon(Icons.Rounded.Home, contentDescription = "Home")
@@ -231,11 +234,12 @@ fun MashResultScreen(
                             CosmicActionButtons(
                                 onViewHistory = {
                                     haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                                    navController.navigate("history")
+
+                                    navController.navigateToHistory()
                                 },
                                 onDivineAgain = {
                                     haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                                    navController.navigate("new_mash")
+                                    navController.navigateToNewMash()
                                 }
                             )
                         }

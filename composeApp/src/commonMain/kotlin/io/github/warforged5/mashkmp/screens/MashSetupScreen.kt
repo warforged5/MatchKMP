@@ -1,15 +1,11 @@
-package io.github.warforged5.mash.screens
+package io.github.warforged5.mashkmp.screens
 
 import androidx.compose.animation.*
-import androidx.compose.animation.core.*
-import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
-import androidx.compose.material.icons.filled.*
-import androidx.compose.material.icons.outlined.*
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.PlayArrow
@@ -17,14 +13,12 @@ import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
-import androidx.compose.ui.draw.*
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.*
 import androidx.navigation.NavController
-import androidx.navigation.compose.*
 import io.github.warforged5.mash.MashViewModel
 import io.github.warforged5.mashkmp.components.CategoryCard
 import io.github.warforged5.mashkmp.components.CategorySelectionDialog
@@ -33,7 +27,6 @@ import io.github.warforged5.mashkmp.components.InfoCard
 import io.github.warforged5.mashkmp.dataclasses.CategoryData
 import io.github.warforged5.mashkmp.dataclasses.MashTemplate
 import io.github.warforged5.mashkmp.enumclasses.MashType
-import kotlinx.datetime.asTimeSource
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 

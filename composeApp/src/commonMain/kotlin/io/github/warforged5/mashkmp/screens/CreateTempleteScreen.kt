@@ -21,6 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.*
 import androidx.navigation.NavController
 import io.github.warforged5.mash.MashViewModel
+import io.github.warforged5.mash.navigateToMashInput
 import io.github.warforged5.mashkmp.components.*
 import io.github.warforged5.mashkmp.dataclasses.*
 import io.github.warforged5.mashkmp.enumclasses.*
@@ -102,7 +103,7 @@ fun CreateTemplateScreen(navController: NavController, viewModel: MashViewModel)
                             },
                             onUse = {
                                 haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                                navController.navigate("mash_input/${template.id}")
+                                navController.navigateToMashInput(template.id)
                             }
                         )
                     }

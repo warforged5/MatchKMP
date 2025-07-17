@@ -1,21 +1,13 @@
-// Theme.kt
-package io.github.warforged5.mash.ui.theme
+// Theme.kt - Multiplatform compatible
+package io.github.warforged5.mashkmp.ui.theme
 
-import android.app.Activity
-import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalView
-import androidx.core.view.WindowCompat
+import io.github.warforged5.mash.ui.theme.Typography
 
 // Mystical Theme (Purple/Violet)
 private val MysticalDarkColorScheme = darkColorScheme(
@@ -102,6 +94,13 @@ private val OceanDarkColorScheme = darkColorScheme(
     onSurface = Color(0xFFE1F5FE),
     surfaceVariant = Color(0xFF2D3748),
     onSurfaceVariant = Color(0xFFCAD5E0),
+    outline = Color(0xFF79747E),
+    inverseOnSurface = Color(0xFF1C1B1F),
+    inverseSurface = Color(0xFFE1F5FE),
+    inversePrimary = Color(0xFF0077BE),
+    surfaceTint = Color(0xFF0077BE),
+    outlineVariant = Color(0xFF49454F),
+    scrim = Color(0xFF000000),
 )
 
 private val OceanLightColorScheme = lightColorScheme(
@@ -123,6 +122,13 @@ private val OceanLightColorScheme = lightColorScheme(
     onSurface = Color(0xFF001F25),
     surfaceVariant = Color(0xFFE0F2F1),
     onSurfaceVariant = Color(0xFF3F4A4C),
+    outline = Color(0xFF79747E),
+    inverseOnSurface = Color(0xFFF4EFF4),
+    inverseSurface = Color(0xFF313033),
+    inversePrimary = Color(0xFFB3E5FC),
+    surfaceTint = Color(0xFF0077BE),
+    outlineVariant = Color(0xFFCAC4D0),
+    scrim = Color(0xFF000000),
 )
 
 // Forest Theme (Green/Natural)
@@ -145,6 +151,13 @@ private val ForestDarkColorScheme = darkColorScheme(
     onSurface = Color(0xFFE8F5E8),
     surfaceVariant = Color(0xFF2D4A2D),
     onSurfaceVariant = Color(0xFFC4D5C4),
+    outline = Color(0xFF79747E),
+    inverseOnSurface = Color(0xFF1C1B1F),
+    inverseSurface = Color(0xFFE8F5E8),
+    inversePrimary = Color(0xFF4CAF50),
+    surfaceTint = Color(0xFF4CAF50),
+    outlineVariant = Color(0xFF49454F),
+    scrim = Color(0xFF000000),
 )
 
 private val ForestLightColorScheme = lightColorScheme(
@@ -166,6 +179,13 @@ private val ForestLightColorScheme = lightColorScheme(
     onSurface = Color(0xFF1B5E1F),
     surfaceVariant = Color(0xFFE8F5E8),
     onSurfaceVariant = Color(0xFF424242),
+    outline = Color(0xFF79747E),
+    inverseOnSurface = Color(0xFFF4EFF4),
+    inverseSurface = Color(0xFF313033),
+    inversePrimary = Color(0xFFC8E6C9),
+    surfaceTint = Color(0xFF4CAF50),
+    outlineVariant = Color(0xFFCAC4D0),
+    scrim = Color(0xFF000000),
 )
 
 // Sunset Theme (Orange/Pink)
@@ -188,6 +208,13 @@ private val SunsetDarkColorScheme = darkColorScheme(
     onSurface = Color(0xFFFFF3E0),
     surfaceVariant = Color(0xFF4A2D2D),
     onSurfaceVariant = Color(0xFFD5C4C4),
+    outline = Color(0xFF79747E),
+    inverseOnSurface = Color(0xFF1C1B1F),
+    inverseSurface = Color(0xFFFFF3E0),
+    inversePrimary = Color(0xFFFF5722),
+    surfaceTint = Color(0xFFFF5722),
+    outlineVariant = Color(0xFF49454F),
+    scrim = Color(0xFF000000),
 )
 
 private val SunsetLightColorScheme = lightColorScheme(
@@ -209,6 +236,13 @@ private val SunsetLightColorScheme = lightColorScheme(
     onSurface = Color(0xFF3E2723),
     surfaceVariant = Color(0xFFFFF3E0),
     onSurfaceVariant = Color(0xFF5D4037),
+    outline = Color(0xFF79747E),
+    inverseOnSurface = Color(0xFFF4EFF4),
+    inverseSurface = Color(0xFF313033),
+    inversePrimary = Color(0xFFFFCCBC),
+    surfaceTint = Color(0xFFFF5722),
+    outlineVariant = Color(0xFFCAC4D0),
+    scrim = Color(0xFF000000),
 )
 
 // Lavender Theme (Soft Purple/Pink)
@@ -231,6 +265,13 @@ private val LavenderDarkColorScheme = darkColorScheme(
     onSurface = Color(0xFFF3E5F5),
     surfaceVariant = Color(0xFF4A2D4A),
     onSurfaceVariant = Color(0xFFD5C4D5),
+    outline = Color(0xFF79747E),
+    inverseOnSurface = Color(0xFF1C1B1F),
+    inverseSurface = Color(0xFFF3E5F5),
+    inversePrimary = Color(0xFFBA68C8),
+    surfaceTint = Color(0xFFBA68C8),
+    outlineVariant = Color(0xFF49454F),
+    scrim = Color(0xFF000000),
 )
 
 private val LavenderLightColorScheme = lightColorScheme(
@@ -252,6 +293,13 @@ private val LavenderLightColorScheme = lightColorScheme(
     onSurface = Color(0xFF4A148C),
     surfaceVariant = Color(0xFFF3E5F5),
     onSurfaceVariant = Color(0xFF6A1B9A),
+    outline = Color(0xFF79747E),
+    inverseOnSurface = Color(0xFFF4EFF4),
+    inverseSurface = Color(0xFF313033),
+    inversePrimary = Color(0xFFE1BEE7),
+    surfaceTint = Color(0xFFBA68C8),
+    outlineVariant = Color(0xFFCAC4D0),
+    scrim = Color(0xFF000000),
 )
 
 enum class AppTheme {
@@ -266,40 +314,28 @@ enum class AppTheme {
 @Composable
 fun MashTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    selectedTheme: AppTheme = AppTheme.SYSTEM,
-    dynamicColor: Boolean = true,
+    selectedTheme: AppTheme = AppTheme.MYSTICAL,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = when {
-        selectedTheme == AppTheme.SYSTEM && dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
-        selectedTheme == AppTheme.MYSTICAL -> {
+    val colorScheme = when (selectedTheme) {
+        AppTheme.SYSTEM -> {
+            // Use Mystical as default since we can't access dynamic colors in multiplatform common code
             if (darkTheme) MysticalDarkColorScheme else MysticalLightColorScheme
         }
-        selectedTheme == AppTheme.OCEAN -> {
+        AppTheme.MYSTICAL -> {
+            if (darkTheme) MysticalDarkColorScheme else MysticalLightColorScheme
+        }
+        AppTheme.OCEAN -> {
             if (darkTheme) OceanDarkColorScheme else OceanLightColorScheme
         }
-        selectedTheme == AppTheme.FOREST -> {
+        AppTheme.FOREST -> {
             if (darkTheme) ForestDarkColorScheme else ForestLightColorScheme
         }
-        selectedTheme == AppTheme.SUNSET -> {
+        AppTheme.SUNSET -> {
             if (darkTheme) SunsetDarkColorScheme else SunsetLightColorScheme
         }
-        selectedTheme == AppTheme.LAVENDER -> {
+        AppTheme.LAVENDER -> {
             if (darkTheme) LavenderDarkColorScheme else LavenderLightColorScheme
-        }
-        darkTheme -> MysticalDarkColorScheme // Default to mystical
-        else -> MysticalLightColorScheme
-    }
-
-    val view = LocalView.current
-    if (!view.isInEditMode) {
-        SideEffect {
-            val window = (view.context as Activity).window
-            window.statusBarColor = colorScheme.primary.toArgb()
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
         }
     }
 

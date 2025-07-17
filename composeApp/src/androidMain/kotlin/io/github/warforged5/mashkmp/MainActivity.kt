@@ -11,7 +11,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import io.github.warforged5.mash.ui.theme.MashTheme
+import io.github.warforged5.mashkmp.ui.theme.MashTheme
 import io.github.warforged5.mash.ui.theme.ThemeManager
 import io.github.warforged5.mashkmp.platform.Settings
 
@@ -33,7 +33,7 @@ class MainActivity : ComponentActivity() {
             MashTheme(
                 darkTheme = isDarkTheme,
                 selectedTheme = currentTheme,
-                dynamicColor = false // Disable dynamic color to show custom themes
+                 // Disable dynamic color to show custom themes
             ) {
                 // A surface container using the 'background' color from the theme
                 Surface(

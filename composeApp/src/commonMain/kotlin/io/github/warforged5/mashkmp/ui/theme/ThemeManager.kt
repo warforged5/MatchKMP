@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import io.github.warforged5.mashkmp.platform.Settings
+import io.github.warforged5.mashkmp.ui.theme.AppTheme
 
 enum class DarkModePreference {
     SYSTEM,

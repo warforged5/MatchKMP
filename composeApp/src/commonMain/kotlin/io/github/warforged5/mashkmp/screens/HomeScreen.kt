@@ -1,4 +1,4 @@
-package io.github.warforged5.mash.screens
+package io.github.warforged5.mashkmp.screens
 
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
@@ -25,6 +25,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
+import io.github.warforged5.mash.navigateToCreateTemplate
+import io.github.warforged5.mash.navigateToHistory
+import io.github.warforged5.mash.navigateToNewMash
 import io.github.warforged5.mashkmp.components.AnimatedHomeCard
 import io.github.warforged5.mashkmp.components.ThemeSelectionDialog
 import io.github.warforged5.mash.ui.theme.ThemeManager
@@ -169,7 +172,7 @@ fun HomeScreen(
                         onClick = {
                             haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                             selectedCard = 0
-                            navController.navigate("new_mash")
+                            navController.navigateToNewMash()
                         }
                     )
                 }
@@ -186,7 +189,7 @@ fun HomeScreen(
                         onClick = {
                             haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                             selectedCard = 1
-                            navController.navigate("create_template")
+                            navController.navigateToCreateTemplate()
                         }
                     )
                 }
@@ -203,7 +206,7 @@ fun HomeScreen(
                         onClick = {
                             haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                             selectedCard = 2
-                            navController.navigate("history")
+                            navController.navigateToHistory()
                         }
                     )
                 }

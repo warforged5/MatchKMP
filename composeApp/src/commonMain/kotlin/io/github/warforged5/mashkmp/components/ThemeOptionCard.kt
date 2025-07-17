@@ -14,7 +14,9 @@ import androidx.compose.ui.draw.*
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.*
-import io.github.warforged5.mash.ui.theme.*
+import io.github.warforged5.mashkmp.ui.theme.AppTheme
+import io.github.warforged5.mashkmp.ui.theme.getDisplayName
+import io.github.warforged5.mashkmp.ui.theme.getIcon
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

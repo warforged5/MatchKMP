@@ -1,14 +1,28 @@
 
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlinSerialization)
+
+
 }
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath(libs.kotlin.gradle.plugin)
+        classpath(libs.buildkonfig.gradle.plugin)
+    }
+}
+
+
 
 kotlin {
     androidTarget {
@@ -52,12 +66,15 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtimeCompose)
+
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }
     }
 }
+
+
 
 android {
     namespace = "io.github.warforged5.mashkmp"
@@ -84,10 +101,12 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
     buildToolsVersion = "36.0.0"
 }
 
 dependencies {
+    implementation(libs.androidx.tools.core)
     debugImplementation(compose.uiTooling)
 }
 
