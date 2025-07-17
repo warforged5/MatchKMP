@@ -20,6 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.*
 import androidx.navigation.NavController
 import io.github.warforged5.mash.MashViewModel
+import io.github.warforged5.mash.navigateToMashInput
 import io.github.warforged5.mashkmp.components.CategoryCard
 import io.github.warforged5.mashkmp.components.CategorySelectionDialog
 import io.github.warforged5.mashkmp.components.EditCategoryWithNicknameDialog
@@ -98,7 +99,7 @@ fun MashSetupScreen(
                             type = type
                         )
                         viewModel.tempTemplate = template
-                        navController.navigate("mash_input/${template.id}")
+                        navController.navigateToMashInput(template.id)
                     },
                     containerColor = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.padding(bottom = 16.dp)

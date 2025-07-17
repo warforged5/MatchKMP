@@ -6,6 +6,8 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
@@ -73,7 +75,7 @@ fun ChoiceInputSection(
             ValidationErrorCard("This choice already exists!")
         }
 
-        // Choices list with consistent sizing
+        // Scrollable Choices list with consistent sizing
         AnimatedVisibility(
             visible = choices.isNotEmpty(),
             enter = fadeIn(tween(300)) + expandVertically(tween(300)),
@@ -109,33 +111,39 @@ fun ChoiceInputSection(
                     }
                 }
 
-                // Choices grid with proper spacing
-                ChoicesGrid(
-                    choices = choices,
-                    onRemoveChoice = onRemoveChoice
-                )
+                // Scrollable choices container with max height
+                Surface(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .heightIn(max = 300.dp), // Limit height to make it scrollable
+                    shape = RoundedCornerShape(16.dp),
+                    color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)
+                ) {
+                    LazyColumn(
+                        modifier = Modifier.padding(12.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                        contentPadding = PaddingValues(vertical = 4.dp)
+                    ) {
+                        itemsIndexed(choices) { index, choice ->
+                            ChoiceChip(
+                                choice = choice,
+                                index = index + 1,
+                                onRemove = { onRemoveChoice(index) }
+                            )
+                        }
+                    }
+                }
+
+                // Scroll hint when there are many choices
+                if (choices.size >= 4) {
+                    Text(
+                        "💡 Scroll up to see all choices",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
             }
-        }
-    }
-}
-
-
-@Composable
-private fun ChoicesGrid(
-    choices: List<String>,
-    onRemoveChoice: (Int) -> Unit
-) {
-    // Single column layout to match input field width
-    Column(
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        choices.forEachIndexed { index, choice ->
-            ChoiceChip(
-                choice = choice,
-                index = index + 1,
-                onRemove = { onRemoveChoice(index) }
-            )
         }
     }
 }
@@ -256,7 +264,6 @@ private fun EnhancedInputField(
     }
 }
 
-
 @Composable
 private fun ValidationErrorCard(message: String) {
     Surface(
@@ -283,49 +290,6 @@ private fun ValidationErrorCard(message: String) {
         }
     }
 }
-
-@Composable
-private fun SquircleDeleteButton(
-    isHovered: Boolean,
-    contentColor: Color,
-    onClick: () -> Unit
-) {
-    val squircleScale by animateFloatAsState(
-        targetValue = if (isHovered) 1.1f else 1f,
-        animationSpec = spring(dampingRatio = 0.5f)
-    )
-
-    val backgroundColor by animateColorAsState(
-        targetValue = if (isHovered)
-            MaterialTheme.colorScheme.error.copy(alpha = 0.1f)
-        else
-            MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
-        animationSpec = tween(200)
-    )
-
-    Surface(
-        onClick = onClick,
-        modifier = Modifier
-            .size(36.dp) // Prominent size
-            .scale(squircleScale),
-        shape = RoundedCornerShape(12.dp), // Squircle shape (rounded square)
-        color = backgroundColor,
-        border = if (isHovered)
-            BorderStroke(1.dp, MaterialTheme.colorScheme.error.copy(alpha = 0.3f))
-        else null
-    ) {
-        Box(contentAlignment = Alignment.Center) {
-            Icon(
-                Icons.Rounded.Close,
-                contentDescription = "Remove choice",
-                tint = contentColor,
-                modifier = Modifier.size(20.dp) // Appropriately sized icon
-            )
-        }
-    }
-}
-
-
 
 private fun getPlaceholderForCategory(categoryName: String): String = when (categoryName.lowercase()) {
     "mash", "mash (housing)" -> "Villa, Cabin, Loft..."
