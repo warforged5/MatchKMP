@@ -23,7 +23,7 @@ class MashViewModel(private val settings: Settings) : androidx.lifecycle.ViewMod
     var tempTemplate: MashTemplate? = null
 
     // Gemini API
-    private val geminiApiKey = "AIzaSyCIigdTLam0KkaK1CRXNXLO_7kHlatnnpo"
+    private val geminiApiKey = ""
     private val generativeModel = GenerativeModel(
         modelName = "gemini-2.5-flash",
         apiKey = geminiApiKey

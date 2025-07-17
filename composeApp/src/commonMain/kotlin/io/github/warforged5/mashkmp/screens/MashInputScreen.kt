@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.*
 import androidx.navigation.NavController
 import io.github.warforged5.mash.Home
 import io.github.warforged5.mash.MashViewModel
+import io.github.warforged5.mash.ResultScreen
 import io.github.warforged5.mashkmp.components.ChoiceInputSection
 import io.github.warforged5.mashkmp.components.NewEliminationSystem
 import io.github.warforged5.mashkmp.components.NewSpiralDrawingDialog
@@ -167,7 +168,7 @@ fun MashInputScreen(
                         spiralCount = spiralCount
                     )
                     viewModel.saveResult(result)
-                    navController.navigate(MashResult) {
+                    navController.navigate(ResultScreen) {
                         popUpTo<Home>()
                     }
                 },
@@ -189,7 +190,7 @@ fun MashInputScreen(
                         )
                         viewModel.saveResult(result)
                         isGeneratingStoryAfterSpiral = false
-                        navController.navigate(MashResult) {
+                        navController.navigate(ResultScreen) {
                             popUpTo<Home>()
                         }
                     }
@@ -531,7 +532,7 @@ fun MashInputScreen(
                                 )
                                 viewModel.saveResult(result)
                                 isGeneratingStory = false
-                                navController.navigate(MashResult) {
+                                navController.navigate(ResultScreen) {
                                     popUpTo<Home>()
                                 }
                             }
@@ -553,7 +554,7 @@ fun MashInputScreen(
                                 selections = selections
                             )
                             viewModel.saveResult(result)
-                            navController.navigate(MashResult) {
+                            navController.navigate(ResultScreen) {
                                 popUpTo<Home>()
                             }
                         }

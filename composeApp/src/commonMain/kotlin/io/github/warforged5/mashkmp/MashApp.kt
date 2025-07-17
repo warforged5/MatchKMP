@@ -40,7 +40,7 @@ data class MashSetup(val type: String)
 data class MashInput(val templateId: String)
 
 @Serializable
-object MashResult
+object ResultScreen  // Renamed from MashResult to avoid collision
 
 @Composable
 fun MashApp(themeManager: ThemeManager) {
@@ -100,7 +100,7 @@ fun MashApp(themeManager: ThemeManager) {
             MashInputScreen(navController, viewModel, mashInput.templateId)
         }
 
-        composable<MashResult> {
+        composable<ResultScreen> {  // Updated route name
             MashResultScreen(navController, viewModel)
         }
     }
@@ -128,7 +128,7 @@ fun NavController.navigateToHistory() {
 }
 
 fun NavController.navigateToMashResult() {
-    navigate(MashResult)
+    navigate(ResultScreen)  // Updated to use new name
 }
 
 fun NavController.navigateToHome() {
