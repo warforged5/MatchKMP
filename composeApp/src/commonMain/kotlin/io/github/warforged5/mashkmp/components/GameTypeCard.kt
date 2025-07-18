@@ -74,11 +74,7 @@ fun GameTypeCard(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(
-                        Brush.linearGradient(
-                            colors = gradient,
-                            start = Offset(0f, 0f),
-                            end = Offset(Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY)
-                        )
+                        color = gradient[0]
                     )
             )
 
@@ -109,7 +105,7 @@ fun GameTypeCard(
                 Surface(
                     modifier = Modifier.size(64.dp),
                     shape = RoundedCornerShape(20.dp),
-                    color = Color.White.copy(alpha = 0.2f)
+                    color = gradient[1].copy(alpha = .1f)
                 ) {
                     Box(
                         contentAlignment = Alignment.Center
@@ -117,7 +113,7 @@ fun GameTypeCard(
                         Icon(
                             icon,
                             contentDescription = null,
-                            tint = Color.White,
+                            tint = gradient[1].copy(alpha = 1f),
                             modifier = Modifier.size(32.dp)
                         )
                     }
@@ -131,12 +127,12 @@ fun GameTypeCard(
                         title,
                         style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold,
-                        color = Color.White
+                        color = gradient[1].copy(alpha = 1f)
                     )
                     Text(
                         description,
                         style = MaterialTheme.typography.bodyLarge,
-                        color = Color.White.copy(alpha = 0.9f)
+                        color = gradient[1].copy(alpha = 1f)
                     )
                 }
             }

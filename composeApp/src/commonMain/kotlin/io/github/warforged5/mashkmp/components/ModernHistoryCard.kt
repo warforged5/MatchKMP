@@ -78,18 +78,7 @@ fun ModernHistoryCard(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(100.dp)
-                    .background(
-                        Brush.verticalGradient(
-                            colors = listOf(
-                                when (result.template.type) {
-                                    MashType.CLASSIC -> MaterialTheme.colorScheme.primaryContainer
-                                    MashType.HYBRID -> MaterialTheme.colorScheme.secondaryContainer
-                                    MashType.CUSTOM -> MaterialTheme.colorScheme.tertiaryContainer
-                                }.copy(alpha = 0.15f),
-                                Color.Transparent
-                            )
-                        )
-                    )
+
             )
 
             Column(

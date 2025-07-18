@@ -154,8 +154,8 @@ fun NewMashScreen(navController: NavController, viewModel: MashViewModel) {
                     description = "The original game you know and love",
                     icon = Icons.Rounded.Home,
                     gradient = listOf(
-                        MaterialTheme.colorScheme.primary,
-                        MaterialTheme.colorScheme.primary.copy(alpha = 0.8f)
+                        MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
+                        MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.3f)
                     ),
                     delay = 0,
                     onClick = {
@@ -172,8 +172,8 @@ fun NewMashScreen(navController: NavController, viewModel: MashViewModel) {
                     description = "Best of both worlds",
                     icon = Icons.Rounded.Shuffle,
                     gradient = listOf(
-                        MaterialTheme.colorScheme.secondary,
-                        MaterialTheme.colorScheme.secondary.copy(alpha = 0.8f)
+                        MaterialTheme.colorScheme.secondary.copy(alpha = 0.3f),
+                        MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.3f)
                     ),
                     delay = 100,
                     onClick = {
@@ -190,8 +190,8 @@ fun NewMashScreen(navController: NavController, viewModel: MashViewModel) {
                     description = "Make it uniquely yours",
                     icon = Icons.Rounded.Build,
                     gradient = listOf(
-                        MaterialTheme.colorScheme.tertiary,
-                        MaterialTheme.colorScheme.tertiary.copy(alpha = 0.8f)
+                        MaterialTheme.colorScheme.tertiary.copy(alpha = 0.3f),
+                        MaterialTheme.colorScheme.onTertiaryContainer.copy(alpha = 0.3f)
                     ),
                     delay = 200,
                     onClick = {

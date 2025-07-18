@@ -132,6 +132,7 @@ fun NewEliminationSystem(
                     )
                 )
             )
+            .statusBarsPadding() // This adds padding for the status bar/dynamic island
             .padding(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(20.dp)

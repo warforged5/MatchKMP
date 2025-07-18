@@ -49,7 +49,7 @@ fun ThemeOptionCard(
             }
         ),
 
-    ) {
+        ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -157,6 +157,46 @@ fun getThemePreviewColors(theme: AppTheme): List<Color> = when (theme) {
         Color(0xFFCE93D8),
         Color(0xFFF48FB1)
     )
+    AppTheme.NEON -> listOf(
+        Color(0xFFFF0080),
+        Color(0xFF00FF80),
+        Color(0xFF0080FF)
+    )
+    AppTheme.COSMIC -> listOf(
+        Color(0xFF8A2BE2),
+        Color(0xFF483D8B),
+        Color(0xFF9932CC)
+    )
+    AppTheme.CHERRY_BLOSSOM -> listOf(
+        Color(0xFFFFB6C1),
+        Color(0xFFFFC0CB),
+        Color(0xFFEEB4B4)
+    )
+    AppTheme.FIRE -> listOf(
+        Color(0xFFFF4500),
+        Color(0xFFDC143C),
+        Color(0xFFFF6347)
+    )
+    AppTheme.ICE -> listOf(
+        Color(0xFF87CEEB),
+        Color(0xFFB0E0E6),
+        Color(0xFFE0F6FF)
+    )
+    AppTheme.EARTH -> listOf(
+        Color(0xFFD2B48C),
+        Color(0xFFCD853F),
+        Color(0xFFBC9A6A)
+    )
+    AppTheme.ROYAL -> listOf(
+        Color(0xFF4169E1),
+        Color(0xFFFFD700),
+        Color(0xFF800080)
+    )
+    AppTheme.MINT -> listOf(
+        Color(0xFF98FB98),
+        Color(0xFF7FFFD4),
+        Color(0xFFAFEEEE)
+    )
 }
 
 fun getThemeDescription(theme: AppTheme): String = when (theme) {
@@ -166,4 +206,12 @@ fun getThemeDescription(theme: AppTheme): String = when (theme) {
     AppTheme.FOREST -> "Natural greens for earth connection"
     AppTheme.SUNSET -> "Warm oranges and pinks like twilight"
     AppTheme.LAVENDER -> "Soft purples for dreamy experiences"
+    AppTheme.NEON -> "Bright cyberpunk colors that pop"
+    AppTheme.COSMIC -> "Deep space purples and stellar blues"
+    AppTheme.CHERRY_BLOSSOM -> "Delicate pinks inspired by spring"
+    AppTheme.FIRE -> "Intense reds and oranges like flames"
+    AppTheme.ICE -> "Cool crystalline blues and whites"
+    AppTheme.EARTH -> "Warm browns and tans from nature"
+    AppTheme.ROYAL -> "Regal blues with golden accents"
+    AppTheme.MINT -> "Fresh greens for a clean feeling"
 }
