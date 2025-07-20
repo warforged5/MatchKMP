@@ -3,6 +3,7 @@ package io.github.warforged5.mashkmp.screens
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.*
+import androidx.compose.foundation.gestures.snapping.SnapPosition
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.shape.CircleShape
@@ -458,9 +459,12 @@ private fun CosmicTitleCard(colorP: Color) {
             Column(
                 modifier = Modifier.padding(32.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
+
+
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 Text(
+
                     "The Cosmic Revelation",
                     style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Bold,
@@ -468,12 +472,13 @@ private fun CosmicTitleCard(colorP: Color) {
                     color = MaterialTheme.colorScheme.primary
                 )
 
-                Text(
-                    "The universe has spoken through the ancient art of divination",
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
-                    textAlign = TextAlign.Center
-                )
+                    Text(
+                        "The universe has spoken through the ancient art of divination",
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
+                        textAlign = TextAlign.Center
+                    )
+
             }
         }
     }

@@ -16,6 +16,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalFocusManager
@@ -725,6 +726,7 @@ private fun EmptyCategoriesState(
     onAddCategory: () -> Unit
 ) {
     Surface(
+
         shape = RoundedCornerShape(16.dp),
         color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)
     ) {
