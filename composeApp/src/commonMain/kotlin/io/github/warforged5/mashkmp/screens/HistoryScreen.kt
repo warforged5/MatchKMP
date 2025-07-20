@@ -21,13 +21,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.*
 import androidx.navigation.NavController
 import io.github.warforged5.mash.MashViewModel
+import io.github.warforged5.mash.navigateToMashInput
 import io.github.warforged5.mash.navigateToNewMash
 import io.github.warforged5.mashkmp.components.EmptyHistoryState
 import io.github.warforged5.mashkmp.components.ModernHistoryCard
 import io.github.warforged5.mashkmp.enumclasses.MashType
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
 
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalTime::class)
 @Composable
 fun HistoryScreen(navController: NavController, viewModel: MashViewModel) {
     var filterType by remember { mutableStateOf<MashType?>(null) }
@@ -175,6 +178,24 @@ fun HistoryScreen(navController: NavController, viewModel: MashViewModel) {
                                     onDelete = {
                                         haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                                         viewModel.deleteResult(result)
+                                    },
+                                    onPlayAgain = {
+                                        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+
+                                        // Try to find the existing template first
+                                        val existingTemplate = viewModel.templates.find { it.id == result.template.id }
+
+                                        if (existingTemplate != null) {
+                                            // Use existing template
+                                            navController.navigateToMashInput(existingTemplate.id)
+                                        } else {
+                                            // Create a temporary template from the result
+                                            val tempTemplate = result.template.copy(
+                                                id = "temp_${Clock.System.now().toEpochMilliseconds()}"
+                                            )
+                                            viewModel.tempTemplate = tempTemplate
+                                            navController.navigateToMashInput(tempTemplate.id)
+                                        }
                                     },
                                     onClick = {
                                         haptic.performHapticFeedback(HapticFeedbackType.LongPress)

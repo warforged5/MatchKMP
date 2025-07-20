@@ -457,7 +457,7 @@ private fun CosmicTitleCard(colorP: Color) {
             }
 
             Column(
-                modifier = Modifier.padding(32.dp),
+                modifier = Modifier.padding(32.dp).fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally,
 
 

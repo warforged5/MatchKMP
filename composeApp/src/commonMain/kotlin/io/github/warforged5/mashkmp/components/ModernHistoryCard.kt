@@ -43,6 +43,7 @@ fun ModernHistoryCard(
     result: MashResult,
     index: Int,
     onDelete: () -> Unit,
+    onPlayAgain: () -> Unit,
     onClick: () -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
@@ -69,127 +70,166 @@ fun ModernHistoryCard(
             .fillMaxWidth()
             .alpha(animatedAlpha),
         elevation = CardDefaults.elevatedCardElevation(
-            defaultElevation = if (expanded) 6.dp else 2.dp
+            defaultElevation = if (expanded) 8.dp else 3.dp
+        ),
+        colors = CardDefaults.elevatedCardColors(
+            containerColor = MaterialTheme.colorScheme.surface
         )
     ) {
-        Box {
-            // Background gradient
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(100.dp)
-
-            )
-
+        Column(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            // Main card content
             Column(
                 modifier = Modifier.padding(20.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                // Header
+                // Header row with template info and actions
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.Top
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Column(modifier = Modifier.weight(1f)) {
-                        Row(
-                            horizontalArrangement = Arrangement.spacedBy(12.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Surface(
-                                modifier = Modifier.size(40.dp),
-                                shape = RoundedCornerShape(12.dp),
-                                color = when (result.template.type) {
-                                    MashType.CLASSIC -> MaterialTheme.colorScheme.primary
-                                    MashType.HYBRID -> MaterialTheme.colorScheme.secondary
-                                    MashType.CUSTOM -> MaterialTheme.colorScheme.tertiary
-                                }.copy(alpha = 0.2f)
-                            ) {
-                                Box(contentAlignment = Alignment.Center) {
-                                    Icon(
-                                        when (result.template.type) {
-                                            MashType.CLASSIC -> Icons.Rounded.Home
-                                            MashType.HYBRID -> Icons.Rounded.Shuffle
-                                            MashType.CUSTOM -> Icons.Rounded.Build
-                                        },
-                                        contentDescription = null,
-                                        tint = when (result.template.type) {
-                                            MashType.CLASSIC -> MaterialTheme.colorScheme.primary
-                                            MashType.HYBRID -> MaterialTheme.colorScheme.secondary
-                                            MashType.CUSTOM -> MaterialTheme.colorScheme.tertiary
-                                        },
-                                        modifier = Modifier.size(20.dp)
-                                    )
-                                }
+                    // Template info section
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        // Template type icon
+                        Surface(
+                            modifier = Modifier.size(48.dp),
+                            shape = RoundedCornerShape(16.dp),
+                            color = when (result.template.type) {
+                                MashType.CLASSIC -> MaterialTheme.colorScheme.primaryContainer
+                                MashType.HYBRID -> MaterialTheme.colorScheme.secondaryContainer
+                                MashType.CUSTOM -> MaterialTheme.colorScheme.tertiaryContainer
                             }
+                        ) {
+                            Box(contentAlignment = Alignment.Center) {
+                                Icon(
+                                    when (result.template.type) {
+                                        MashType.CLASSIC -> Icons.Rounded.Home
+                                        MashType.HYBRID -> Icons.Rounded.Shuffle
+                                        MashType.CUSTOM -> Icons.Rounded.Build
+                                    },
+                                    contentDescription = null,
+                                    tint = when (result.template.type) {
+                                        MashType.CLASSIC -> MaterialTheme.colorScheme.onPrimaryContainer
+                                        MashType.HYBRID -> MaterialTheme.colorScheme.onSecondaryContainer
+                                        MashType.CUSTOM -> MaterialTheme.colorScheme.onTertiaryContainer
+                                    },
+                                    modifier = Modifier.size(24.dp)
+                                )
+                            }
+                        }
 
-                            Column {
-                                Row(
-                                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-                                    Text(
-                                        result.template.name,
-                                        style = MaterialTheme.typography.titleMedium,
-                                        fontWeight = FontWeight.Bold
-                                    )
+                        // Template name and details
+                        Column(
+                            verticalArrangement = Arrangement.spacedBy(4.dp)
+                        ) {
+                            Row(
+                                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    result.template.name,
+                                    style = MaterialTheme.typography.titleMedium,
+                                    fontWeight = FontWeight.Bold,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis
+                                )
 
-                                    if (result.story != null) {
-                                        Surface(
-                                            shape = RoundedCornerShape(8.dp),
-                                            color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f)
+                                // Special indicators
+                                if (result.story != null) {
+                                    Surface(
+                                        shape = RoundedCornerShape(12.dp),
+                                        color = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
+                                    ) {
+                                        Row(
+                                            modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
+                                            horizontalArrangement = Arrangement.spacedBy(2.dp),
+                                            verticalAlignment = Alignment.CenterVertically
                                         ) {
-                                            Row(
-                                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp),
-                                                horizontalArrangement = Arrangement.spacedBy(4.dp),
-                                                verticalAlignment = Alignment.CenterVertically
-                                            ) {
-                                                Icon(
-                                                    Icons.Rounded.AutoAwesome,
-                                                    contentDescription = null,
-                                                    modifier = Modifier.size(12.dp),
-                                                    tint = MaterialTheme.colorScheme.primary
-                                                )
-                                            }
+                                            Icon(
+                                                Icons.Rounded.AutoAwesome,
+                                                contentDescription = null,
+                                                modifier = Modifier.size(10.dp),
+                                                tint = MaterialTheme.colorScheme.primary
+                                            )
+                                            Text(
+                                                "AI",
+                                                style = MaterialTheme.typography.labelSmall,
+                                                color = MaterialTheme.colorScheme.primary,
+                                                fontWeight = FontWeight.Bold
+                                            )
                                         }
                                     }
                                 }
 
-                                Row(
-                                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-                                    Text(
-                                        dateString,
-                                        style = MaterialTheme.typography.bodySmall,
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                                    )
-
-                                    Text(
-                                        "•",
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                                    )
-
-                                    Text(
-                                        timeString,
-                                        style = MaterialTheme.typography.bodySmall,
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                                    )
+                                if (result.spiralCount != null) {
+                                    Surface(
+                                        shape = RoundedCornerShape(12.dp),
+                                        color = MaterialTheme.colorScheme.secondary.copy(alpha = 0.1f)
+                                    ) {
+                                        Row(
+                                            modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
+                                            horizontalArrangement = Arrangement.spacedBy(2.dp),
+                                            verticalAlignment = Alignment.CenterVertically
+                                        ) {
+                                            Text(
+                                                "🌀",
+                                                style = MaterialTheme.typography.labelSmall
+                                            )
+                                            Text(
+                                                "${result.spiralCount}",
+                                                style = MaterialTheme.typography.labelSmall,
+                                                color = MaterialTheme.colorScheme.secondary,
+                                                fontWeight = FontWeight.Bold
+                                            )
+                                        }
+                                    }
                                 }
+                            }
+
+                            // Date and time
+                            Row(
+                                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    dateString,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                                Text(
+                                    "•",
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                                Text(
+                                    timeString,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
                             }
                         }
                     }
 
+                    // Action buttons
                     Row(
+                        horizontalArrangement = Arrangement.spacedBy(4.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         IconButton(
-                            onClick = { showDeleteDialog = true }
+                            onClick = { showDeleteDialog = true },
+                            modifier = Modifier.size(40.dp)
                         ) {
                             Icon(
                                 Icons.Rounded.Delete,
                                 contentDescription = "Delete",
-                                tint = MaterialTheme.colorScheme.error.copy(alpha = 0.7f)
+                                tint = MaterialTheme.colorScheme.error.copy(alpha = 0.7f),
+                                modifier = Modifier.size(20.dp)
                             )
                         }
 
@@ -199,156 +239,164 @@ fun ModernHistoryCard(
                                 fadeIn() togetherWith fadeOut()
                             }
                         ) { isExpanded ->
-                            Icon(
-                                if (isExpanded) Icons.Rounded.ExpandLess else Icons.Rounded.ExpandMore,
-                                contentDescription = if (isExpanded) "Collapse" else "Expand",
-                                modifier = Modifier.padding(8.dp),
-                                tint = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                        }
-                    }
-                }
-
-                // Result Pills
-                LazyRow(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    items(result.selections.entries.take(if (expanded) Int.MAX_VALUE else 3).toList()) { (category, selection) ->
-                        ResultPill(
-                            category = category,
-                            selection = selection,
-                            color = when (result.template.type) {
-                                MashType.CLASSIC -> MaterialTheme.colorScheme.primary
-                                MashType.HYBRID -> MaterialTheme.colorScheme.secondary
-                                MashType.CUSTOM -> MaterialTheme.colorScheme.tertiary
-                            }
-                        )
-                    }
-
-                    if (!expanded && result.selections.size > 3) {
-                        item {
-                            Surface(
-                                shape = RoundedCornerShape(20.dp),
-                                color = MaterialTheme.colorScheme.surfaceVariant
+                            IconButton(
+                                onClick = { expanded = !expanded },
+                                modifier = Modifier.size(40.dp)
                             ) {
-                                Text(
-                                    "+${result.selections.size - 3} more",
-                                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
-                                    style = MaterialTheme.typography.labelMedium
+                                Icon(
+                                    if (isExpanded) Icons.Rounded.ExpandLess else Icons.Rounded.ExpandMore,
+                                    contentDescription = if (isExpanded) "Collapse" else "Expand",
+                                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    modifier = Modifier.size(20.dp)
                                 )
                             }
                         }
                     }
                 }
 
-                // Expanded Content
-                AnimatedVisibility(
-                    visible = expanded,
-                    enter = expandVertically() + fadeIn(),
-                    exit = shrinkVertically() + fadeOut()
+                // Results preview (when collapsed)
+                if (!expanded) {
+                    LazyRow(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        contentPadding = PaddingValues(vertical = 4.dp)
+                    ) {
+                        items(result.selections.entries.take(3).toList()) { (category, selection) ->
+                            CompactResultChip(
+                                category = category,
+                                selection = selection,
+                                color = when (result.template.type) {
+                                    MashType.CLASSIC -> MaterialTheme.colorScheme.primary
+                                    MashType.HYBRID -> MaterialTheme.colorScheme.secondary
+                                    MashType.CUSTOM -> MaterialTheme.colorScheme.tertiary
+                                }
+                            )
+                        }
+
+                        if (result.selections.size > 3) {
+                            item {
+                                Surface(
+                                    shape = RoundedCornerShape(16.dp),
+                                    color = MaterialTheme.colorScheme.outline.copy(alpha = 0.1f)
+                                ) {
+                                    Text(
+                                        "+${result.selections.size - 3}",
+                                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
+                                        style = MaterialTheme.typography.labelMedium,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                        fontWeight = FontWeight.Medium
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Expanded content
+            AnimatedVisibility(
+                visible = expanded,
+                enter = expandVertically() + fadeIn(),
+                exit = shrinkVertically() + fadeOut()
+            ) {
+                Surface(
+                    color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f),
+                    modifier = Modifier.fillMaxWidth()
                 ) {
                     Column(
-                        verticalArrangement = Arrangement.spacedBy(16.dp),
-                        modifier = Modifier.padding(top = 8.dp)
+                        modifier = Modifier.padding(20.dp),
+                        verticalArrangement = Arrangement.spacedBy(20.dp)
                     ) {
+                        // AI Story section (if exists)
                         if (result.story != null) {
-                            Surface(
-                                shape = RoundedCornerShape(16.dp),
-                                color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.2f)
+                            Column(
+                                verticalArrangement = Arrangement.spacedBy(12.dp)
                             ) {
-                                Column(
-                                    modifier = Modifier.padding(16.dp),
-                                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                                Row(
+                                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                    verticalAlignment = Alignment.CenterVertically
                                 ) {
-                                    Row(
-                                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                                        verticalAlignment = Alignment.CenterVertically
-                                    ) {
-                                        Icon(
-                                            Icons.Rounded.AutoStories,
-                                            contentDescription = null,
-                                            tint = MaterialTheme.colorScheme.primary
-                                        )
-                                        Text(
-                                            "Your Story",
-                                            style = MaterialTheme.typography.titleMedium,
-                                            fontWeight = FontWeight.SemiBold
-                                        )
-                                    }
+                                    Icon(
+                                        Icons.Rounded.AutoStories,
+                                        contentDescription = null,
+                                        tint = MaterialTheme.colorScheme.primary,
+                                        modifier = Modifier.size(20.dp)
+                                    )
+                                    Text(
+                                        "Your Story",
+                                        style = MaterialTheme.typography.titleMedium,
+                                        fontWeight = FontWeight.SemiBold
+                                    )
+                                }
 
+                                Surface(
+                                    shape = RoundedCornerShape(16.dp),
+                                    color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f)
+                                ) {
                                     Text(
                                         result.story,
+                                        modifier = Modifier.padding(16.dp),
                                         style = MaterialTheme.typography.bodyMedium,
-                                        lineHeight = 24.sp
+                                        lineHeight = 20.sp
                                     )
                                 }
                             }
                         }
 
-                        // All Choices Section
-                        Surface(
-                            shape = RoundedCornerShape(16.dp),
-                            color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
+                        // All results section
+                        Column(
+                            verticalArrangement = Arrangement.spacedBy(12.dp)
                         ) {
-                            Column(
-                                modifier = Modifier.padding(16.dp).fillMaxWidth(),
-                                verticalArrangement = Arrangement.spacedBy(12.dp)
+                            Row(
+                                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                verticalAlignment = Alignment.CenterVertically
                             ) {
+                                Icon(
+                                    Icons.Rounded.CheckCircle,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.secondary,
+                                    modifier = Modifier.size(20.dp)
+                                )
                                 Text(
-                                    "All Your Choices",
+                                    "Your Results",
                                     style = MaterialTheme.typography.titleMedium,
                                     fontWeight = FontWeight.SemiBold
                                 )
+                            }
 
-                                result.allChoices.forEach { (category, choices) ->
-                                    Column(
-                                        verticalArrangement = Arrangement.spacedBy(4.dp)
-                                    ) {
-                                        Text(
-                                            category,
-                                            style = MaterialTheme.typography.labelLarge,
-                                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                                        )
-                                        LazyRow(
-                                            horizontalArrangement = Arrangement.spacedBy(6.dp)
-                                        ) {
-                                            items(choices) { choice ->
-                                                val isSelected = choice == result.selections[category]
-                                                Surface(
-                                                    shape = RoundedCornerShape(8.dp),
-                                                    color = if (isSelected) {
-                                                        MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
-                                                    } else {
-                                                        MaterialTheme.colorScheme.surface
-                                                    },
-                                                    border = if (isSelected) {
-                                                        BorderStroke(1.dp, MaterialTheme.colorScheme.primary)
-                                                    } else null
-                                                ) {
-                                                    Text(
-                                                        choice,
-                                                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
-                                                        style = MaterialTheme.typography.bodySmall,
-                                                        fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
-                                                    )
-                                                }
-                                            }
+                            // Grid of result chips
+                            FlowRow(
+                                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                verticalArrangement = Arrangement.spacedBy(8.dp),
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                result.selections.entries.forEach { (category, selection) ->
+                                    ExpandedResultChip(
+                                        category = category,
+                                        selection = selection,
+                                        color = when (result.template.type) {
+                                            MashType.CLASSIC -> MaterialTheme.colorScheme.primary
+                                            MashType.HYBRID -> MaterialTheme.colorScheme.secondary
+                                            MashType.CUSTOM -> MaterialTheme.colorScheme.tertiary
                                         }
-                                    }
+                                    )
                                 }
                             }
                         }
 
-                        // Action Buttons
+                        // Action buttons
                         Row(
                             modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                            horizontalArrangement = Arrangement.spacedBy(12.dp)
                         ) {
-                            Button(
-                                onClick = { /* Play again with same template */ },
+                            OutlinedButton(
+                                onClick = onPlayAgain,
                                 modifier = Modifier.weight(1f)
                             ) {
-                                Icon(Icons.Rounded.Refresh, contentDescription = null)
+                                Icon(
+                                    Icons.Rounded.Refresh,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(18.dp)
+                                )
                                 Spacer(modifier = Modifier.width(4.dp))
                                 Text("Play Again")
                             }
@@ -359,6 +407,7 @@ fun ModernHistoryCard(
         }
     }
 
+    // Delete confirmation dialog
     if (showDeleteDialog) {
         AlertDialog(
             onDismissRequest = { showDeleteDialog = false },
@@ -386,6 +435,59 @@ fun ModernHistoryCard(
     }
 }
 
+@Composable
+private fun CompactResultChip(
+    category: String,
+    selection: String,
+    color: Color
+) {
+    Surface(
+        shape = RoundedCornerShape(16.dp),
+        color = color.copy(alpha = 0.1f),
+        border = BorderStroke(1.dp, color.copy(alpha = 0.2f))
+    ) {
+        Text(
+            selection,
+            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
+            style = MaterialTheme.typography.labelMedium,
+            color = color,
+            fontWeight = FontWeight.Medium,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
+        )
+    }
+}
+
+@Composable
+private fun ExpandedResultChip(
+    category: String,
+    selection: String,
+    color: Color
+) {
+    Surface(
+        shape = RoundedCornerShape(12.dp),
+        color = color.copy(alpha = 0.1f),
+        border = BorderStroke(1.dp, color.copy(alpha = 0.3f))
+    ) {
+        Column(
+            modifier = Modifier.padding(12.dp),
+            verticalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
+            Text(
+                category,
+                style = MaterialTheme.typography.labelSmall,
+                color = color.copy(alpha = 0.8f),
+                fontWeight = FontWeight.Medium
+            )
+            Text(
+                selection,
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight.SemiBold,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+        }
+    }
+}
 @Composable
 fun ResultPill(
     category: String,

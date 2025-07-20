@@ -726,7 +726,7 @@ private fun EmptyCategoriesState(
     onAddCategory: () -> Unit
 ) {
     Surface(
-
+        modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
         color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)
     ) {
