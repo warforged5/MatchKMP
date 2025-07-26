@@ -8,7 +8,7 @@
 
 MatchKMP is a cross-platform application built with Kotlin Multiplatform and Compose Multiplatform that brings the classic M.A.S.H. (Mansion, Apartment, Shack, House) fortune-telling game to your Android and iOS devices. The app provides a modern and engaging user experience with customizable game templates, different visual themes, and fun animations.
 
-It is now released on iPhone and Testing on android
+It is now released on iPhone and Testing on android, contact if you want to test
 
 ## Features
 
