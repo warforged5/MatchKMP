@@ -10,6 +10,9 @@ MatchKMP is a cross-platform application built with Kotlin Multiplatform and Com
 
 It is now released on iPhone and Testing on android, contact if you want to test
 
+Known Bugs:
+it will crash if the serial runs out
+
 ## Features
 
 * **Cross-Platform:** Enjoy the same experience on both Android and iOS.
