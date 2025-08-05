@@ -70,7 +70,7 @@ fun MashApp(themeManager: ThemeManager) {
         }
     ) {
         composable<Home> {
-            HomeScreen(navController, themeManager)
+            HomeScreen(navController, themeManager,viewModel)
         }
 
         composable<NewMash> {

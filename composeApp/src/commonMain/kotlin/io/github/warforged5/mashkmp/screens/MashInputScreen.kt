@@ -26,7 +26,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.*
 import androidx.navigation.NavController
 import io.github.warforged5.mash.Home
-import io.github.warforged5.mash.MashViewModel
+import io.github.warforged5.mashkmp.MashViewModel
 import io.github.warforged5.mash.ResultScreen
 import io.github.warforged5.mashkmp.components.ChoiceInputSection
 import io.github.warforged5.mashkmp.components.NewEliminationSystem

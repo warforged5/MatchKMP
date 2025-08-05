@@ -24,7 +24,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.*
 import androidx.navigation.NavController
 import io.github.warforged5.mash.Home
-import io.github.warforged5.mash.MashViewModel
+import io.github.warforged5.mashkmp.MashViewModel
 import io.github.warforged5.mash.navigateToHistory
 import io.github.warforged5.mash.navigateToNewMash
 import io.github.warforged5.mashkmp.dataclasses.CategoryData

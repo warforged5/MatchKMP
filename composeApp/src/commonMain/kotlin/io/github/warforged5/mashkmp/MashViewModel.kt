@@ -1,4 +1,4 @@
-package io.github.warforged5.mash
+package io.github.warforged5.mashkmp
 
 import androidx.compose.runtime.*
 import io.github.warforged5.mashkmp.dataclasses.MashResult
@@ -10,9 +10,13 @@ import kotlinx.serialization.builtins.ListSerializer
 import dev.shreyaspatil.ai.client.generativeai.GenerativeModel
 import dev.shreyaspatil.ai.client.generativeai.type.content
 import io.github.warforged5.mashkmp.dataclasses.CategoryData
+import io.github.warforged5.mashkmp.dataclasses.PremadeTemplates
+import io.github.warforged5.mashkmp.enumclasses.MashType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
 
 class MashViewModel(private val settings: Settings) : androidx.lifecycle.ViewModel() {
     private val json = Json {
@@ -69,6 +73,8 @@ class MashViewModel(private val settings: Settings) : androidx.lifecycle.ViewMod
     init {
         loadTemplates()
         loadHistory()
+        // Load premade templates if not already loaded
+        loadPremadeTemplates()
     }
 
     fun getClassicCategories() = classicCategories
@@ -218,5 +224,79 @@ class MashViewModel(private val settings: Settings) : androidx.lifecycle.ViewMod
             history.clear()
             println("Error loading history: ${e.message}")
         }
+    }
+
+    @OptIn(ExperimentalTime::class)
+    fun loadPremadeTemplates() {
+        // Check if premade templates have been loaded before
+        val hasLoadedPremades = settings.getString("premade_templates_loaded", null) != null
+
+        if (!hasLoadedPremades) {
+            // Load all premade templates
+            PremadeTemplates.allPremadeTemplates.forEach { premadeTemplate ->
+                // Create a copy with a unique ID for saving
+                val templateToSave = premadeTemplate.template.copy(
+                    id = "premade_${premadeTemplate.template.name.replace(" ", "_").lowercase()}_${Clock.System.now().toEpochMilliseconds()}"
+                )
+                templates.add(0, templateToSave)
+            }
+
+            // Save that we've loaded premade templates
+            settings.putString("premade_templates_loaded", "true")
+            saveTemplates()
+        }
+    }
+
+    fun getPremadeTemplateByName(name: String): MashTemplate? {
+        return templates.find { it.name == name }
+    }
+
+    fun getTemplatesByType(type: MashType): List<MashTemplate> {
+        return templates.filter { it.type == type }
+    }
+
+    fun searchTemplates(query: String): List<MashTemplate> {
+        val lowercaseQuery = query.lowercase()
+        return templates.filter { template ->
+            template.name.lowercase().contains(lowercaseQuery) ||
+                    template.categories.any { category ->
+                        category.realName.lowercase().contains(lowercaseQuery) ||
+                                category.nickname.lowercase().contains(lowercaseQuery)
+                    }
+        }
+    }
+
+    // Add a method to get featured templates
+    fun getFeaturedTemplates(): List<MashTemplate> {
+        val featuredNames = listOf(
+            "First Date Fortune",
+            "Career Destiny",
+            "Dream Vacation",
+            "College Experience",
+            "Superhero Destiny"
+        )
+
+        return templates.filter { template ->
+            featuredNames.contains(template.name)
+        }.take(5)
+    }
+
+    // Add method to track template usage
+    fun trackTemplateUsage(templateId: String) {
+        val usageKey = "template_usage_$templateId"
+        val currentUsage = settings.getString(usageKey, "0")?.toIntOrNull() ?: 0
+        settings.putString(usageKey, (currentUsage + 1).toString())
+    }
+
+    // Get most used templates
+    fun getMostUsedTemplates(limit: Int = 5): List<MashTemplate> {
+        return templates.map { template ->
+            val usageKey = "template_usage_${template.id}"
+            val usage = settings.getString(usageKey, "0")?.toIntOrNull() ?: 0
+            template to usage
+        }
+            .sortedByDescending { it.second }
+            .take(limit)
+            .map { it.first }
     }
 }

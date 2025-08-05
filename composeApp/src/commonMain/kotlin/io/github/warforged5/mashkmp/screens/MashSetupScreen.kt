@@ -19,8 +19,8 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.*
 import androidx.navigation.NavController
-import io.github.warforged5.mash.MashViewModel
 import io.github.warforged5.mash.navigateToMashInput
+import io.github.warforged5.mashkmp.MashViewModel
 import io.github.warforged5.mashkmp.components.CategoryCard
 import io.github.warforged5.mashkmp.components.CategorySelectionDialog
 import io.github.warforged5.mashkmp.components.EditCategoryWithNicknameDialog
