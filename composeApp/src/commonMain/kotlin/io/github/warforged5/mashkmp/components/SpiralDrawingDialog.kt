@@ -70,25 +70,21 @@ fun NewSpiralDrawingDialog(
     var showInstructions by remember { mutableStateOf(true) }
     val haptic = LocalHapticFeedback.current
 
-    // Enhanced physics simulation
+    // Enhanced physics simulation with continuous looping
     LaunchedEffect(phase) {
         when (phase) {
             SpiralPhase.DRAWING -> {
                 val startTime = Clock.System.now().toEpochMilliseconds()
                 while (phase == SpiralPhase.DRAWING) {
                     val elapsed = Clock.System.now().toEpochMilliseconds() - startTime
-                    val progress = (elapsed / 5000f).coerceAtMost(1f) // 5 second spiral
+                    // Make spiral run longer (12 seconds) and loop continuously
+                    val cycleDuration = 12000f // 12 seconds per cycle
+                    val rawProgress = (elapsed % cycleDuration.toLong()) / cycleDuration
 
                     spiralData = spiralData.copy(
-                        automaticProgress = progress,
-                        isDrawingComplete = progress >= 1f
+                        automaticProgress = rawProgress,
+                        isDrawingComplete = false // Never auto-complete
                     )
-
-                    if (progress >= 1f) {
-                        // Auto-stop if reaches end
-                        delay(1000)
-                        phase = SpiralPhase.STOPPED
-                    }
 
                     delay(16) // ~60fps
                 }
@@ -376,7 +372,7 @@ private fun InstructionsCard(onToggle: () -> Unit) {
                 )
                 InstructionStep(
                     number = "2",
-                    text = "Watch the mystical spiral unfold automatically"
+                    text = "Watch the mystical spiral flow continuously in cycles"
                 )
                 InstructionStep(
                     number = "3",
@@ -511,17 +507,21 @@ private fun EnhancedDrawingContent(
         // Enhanced stop button
         CosmicStopButton(onStop = onStop)
 
-        // Progress feedback (simplified)
+        // Progress feedback (simplified) - now shows cycle info
         ProgressFeedback(
             progress = spiralData.automaticProgress
         )
     }
 }
 
+@OptIn(ExperimentalTime::class)
 @Composable
 private fun EnhancedDrawingStatus(
     progress: Float
 ) {
+    val cycleDuration = 12000L // Match the cycle duration
+    val cycleNumber = (Clock.System.now().toEpochMilliseconds() / cycleDuration).toInt() + 1
+
     Surface(
         shape = RoundedCornerShape(20.dp),
         color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f)
@@ -537,13 +537,6 @@ private fun EnhancedDrawingStatus(
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.primary
-            )
-
-            Text(
-                "Watch the mystical spiral form... Press STOP when you feel the moment is right!",
-                style = MaterialTheme.typography.bodyLarge,
-                textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
             )
         }
     }
@@ -588,16 +581,18 @@ private fun DrawScope.drawEnhancedSpiral(
     val maxRadius = minOf(size.width, size.height) / 2 - strokeWidth
     val path = Path()
 
-    val totalPoints = (progress * 1000).toInt()
+    // Calculate points based on continuous progress (can exceed 1.0)
+    val effectiveProgress = progress
+    val totalPoints = (effectiveProgress * 1200).toInt() // More points for smoother spiral
     var isFirst = true
 
     for (i in 0 until totalPoints) {
-        val t = i / 1000f * progress
-        val angle = t * 15f * PI.toFloat() // More revolutions
-        val radius = t * maxRadius
+        val t = i / 1200f * effectiveProgress
+        val angle = t * 18f * PI.toFloat() // More revolutions for longer spiral
+        val radius = (t * maxRadius).coerceAtMost(maxRadius) // Cap at max radius
 
         // Add some organic variation
-        val variation = sin(t * 30f) * 5f
+        val variation = sin(t * 30f) * 3f
         val finalRadius = radius + variation
 
         val x = center.x + finalRadius * cos(angle)
@@ -629,7 +624,7 @@ private fun DrawScope.drawSpiralEnergyParticles(progress: Float) {
     val particleCount = (progress * 50).toInt()
     repeat(particleCount) { i ->
         val t = i / 50f * progress
-        val angle = t * 15f * PI.toFloat()
+        val angle = t * 18f * PI.toFloat()
         val radius = t * maxRadius
 
         val x = center.x + radius * cos(angle)
@@ -721,7 +716,7 @@ private fun ProgressFeedback(
         color = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.5f)
     ) {
         Text(
-            "Energy: ${(progress * 100).toInt()}%",
+            "Energy: ${(progress * 100).toInt()}% ",
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
             style = MaterialTheme.typography.bodyMedium,
             fontWeight = FontWeight.SemiBold
@@ -788,7 +783,7 @@ private fun EnhancedStoppedContent(
             ) {
                 Icon(Icons.Rounded.Visibility, contentDescription = null)
                 Spacer(modifier = Modifier.width(4.dp))
-                Text("Count Rings")
+                Text("Count")
             }
         }
     }
@@ -824,7 +819,7 @@ private fun FinalSpiralDisplay(spiralData: SpiralDrawingData) {
 private fun DrawScope.drawMysticalEffects(stoppedProgress: Float) {
     val center = Offset(size.width / 2, size.height / 2)
     val maxRadius = minOf(size.width, size.height) / 2
-    val angle = stoppedProgress * 15f * PI.toFloat()
+    val angle = stoppedProgress * 18f * PI.toFloat()
     val radius = stoppedProgress * maxRadius
 
     val stopX = center.x + radius * cos(angle)
@@ -1002,7 +997,7 @@ private fun CosmicNumberInput(
         ) {
             Icon(Icons.Rounded.AutoAwesome, contentDescription = null)
             Spacer(modifier = Modifier.width(8.dp))
-            Text("Begin Cosmic Elimination", fontWeight = FontWeight.SemiBold)
+            Text("Begin Elimination", fontWeight = FontWeight.SemiBold)
         }
 
         Surface(
@@ -1010,7 +1005,7 @@ private fun CosmicNumberInput(
             color = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.3f)
         ) {
             Text(
-                "💫 Count complete loops that go all the way around.\nThis number will determine your elimination pattern!",
+                "💫 Count complete loops",
                 modifier = Modifier.padding(16.dp),
                 style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Center,
@@ -1107,45 +1102,4 @@ data class SpiralDrawingData(
 
 enum class SpiralStyle {
     AUTOMATIC
-}
-
-// Improved spiral drawing function that shows actual progress
-fun DrawScope.drawLiveSpiral(
-    progress: Float,
-    color: Color,
-    strokeWidth: Float
-) {
-    val center = Offset(size.width / 2, size.height / 2)
-    val maxRadius = minOf(size.width, size.height) / 2 - strokeWidth
-
-    val path = Path()
-    var isFirst = true
-
-    val totalPoints = (progress * 800).toInt() // More points for smoother spiral
-
-    for (i in 0 until totalPoints) {
-        val t = i / 800f * progress
-        val angle = t * 12f * PI.toFloat() // Multiple revolutions
-        val radius = t * maxRadius
-
-        val x = center.x + radius * cos(angle)
-        val y = center.y + radius * sin(angle)
-
-        if (isFirst) {
-            path.moveTo(x, y)
-            isFirst = false
-        } else {
-            path.lineTo(x, y)
-        }
-    }
-
-    drawPath(
-        path = path,
-        color = color,
-        style = Stroke(
-            width = strokeWidth,
-            cap = StrokeCap.Round,
-            join = StrokeJoin.Round
-        )
-    )
 }
