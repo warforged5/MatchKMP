@@ -184,10 +184,10 @@ private fun EnhancedTabRow(
                 Tab(
                     selected = selectedTab == index,
                     onClick = { onTabSelected(index) },
-                    modifier = Modifier.height(64.dp)
+                    modifier = Modifier.height(64.dp).padding(horizontal = 16.dp)
                 ) {
                     Row(
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        horizontalArrangement = Arrangement.spacedBy(6.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(

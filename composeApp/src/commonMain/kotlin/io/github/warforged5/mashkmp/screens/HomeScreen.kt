@@ -64,7 +64,7 @@ fun HomeScreen(
 
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
-        contentWindowInsets = WindowInsets(0, 0, 0, 0)
+        contentWindowInsets = WindowInsets(0, 75, 0, 0)
     ) { paddingValues ->
         Box(modifier = Modifier.fillMaxSize()) {
             // Animated background gradient
@@ -546,7 +546,7 @@ private fun FeaturedTemplateCard(
     template: io.github.warforged5.mashkmp.dataclasses.MashTemplate,
     onClick: () -> Unit
 ) {
-    ElevatedCard(
+   Card(
         onClick = onClick,
         modifier = Modifier
             .width(160.dp)

@@ -157,12 +157,7 @@ fun ModernHistoryCard(
                                                 modifier = Modifier.size(10.dp),
                                                 tint = MaterialTheme.colorScheme.primary
                                             )
-                                            Text(
-                                                "AI",
-                                                style = MaterialTheme.typography.labelSmall,
-                                                color = MaterialTheme.colorScheme.primary,
-                                                fontWeight = FontWeight.Bold
-                                            )
+
                                         }
                                     }
                                 }
